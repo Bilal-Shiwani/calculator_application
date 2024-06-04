@@ -1,5 +1,6 @@
 import 'package:calculator_application/widgets/calculatorbutton.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CalculatorScreen extends StatefulWidget {
   const CalculatorScreen({super.key});
@@ -9,172 +10,272 @@ class CalculatorScreen extends StatefulWidget {
 }
 
 class _CalculatorScreenState extends State<CalculatorScreen> {
+  late int firstNum;
+  late int secondNum;
+  late String history = '';
+  late String textToDisplay = '';
+  late String res;
+  late String operation;
+
+  void btnONclick(String btnVal) {
+    if (btnVal == 'C') {
+      textToDisplay = "";
+      firstNum = 0;
+      secondNum = 0;
+      res = '';
+    } else if (btnVal == 'AC') {
+      textToDisplay = "";
+      firstNum = 0;
+      secondNum = 0;
+      res = '';
+      history = '';
+    } else if (btnVal == '+/-') {
+      if (textToDisplay[0] != '-') {
+        res = '-$textToDisplay';
+      } else {
+        res = textToDisplay.substring(1);
+      }
+    } else if (btnVal == '<') {
+      res = textToDisplay.substring(0, textToDisplay.length - 1);
+    } else if (btnVal == '+' ||
+        btnVal == '-' ||
+        btnVal == 'X' ||
+        btnVal == '÷') {
+      firstNum = int.parse(textToDisplay);
+      res = '';
+      operation = btnVal;
+    } else if (btnVal == '=') {
+      secondNum = int.parse(textToDisplay);
+      if (operation == '+') {
+        res = (firstNum + secondNum).toString();
+        history =
+            firstNum.toString() + operation.toString() + secondNum.toString();
+      }
+      if (operation == '-') {
+        res = (firstNum - secondNum).toString();
+        history =
+            firstNum.toString() + operation.toString() + secondNum.toString();
+      }
+      if (operation == 'X') {
+        res = (firstNum * secondNum).toString();
+        history =
+            firstNum.toString() + operation.toString() + secondNum.toString();
+      }
+      if (operation == '÷') {
+        res = (firstNum / secondNum).toString();
+        history =
+            firstNum.toString() + operation.toString() + secondNum.toString();
+      }
+    } else {
+      res = int.parse(textToDisplay + btnVal).toString();
+    }
+    setState(() {
+      textToDisplay = res;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
+          Container(
+            alignment: const Alignment(1, 1),
+            child: Padding(
+              padding: const EdgeInsets.only(right: 12),
+              child: Text(
+                history,
+                style: GoogleFonts.rubik(
+                  textStyle: const TextStyle(
+                    fontSize: 24,
+                    color: Colors.grey,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Container(
+            alignment: const Alignment(1, 1),
+            child: Padding(
+              padding: const EdgeInsets.all(12),
+              child: Text(
+                textToDisplay,
+                style: GoogleFonts.rubik(
+                  textStyle: const TextStyle(
+                    fontSize: 46,
+                    color: Colors.grey,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 25),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               CalculatorButton(
                 text: 'AC',
-                color: const Color.fromARGB(255, 63, 62, 62),
                 textcolor: Colors.white,
+                callback: btnONclick,
+                color: Colors.grey,
                 textsize: 20,
-                callback: () {},
               ),
               CalculatorButton(
                 text: 'C',
-               color: const Color.fromARGB(255, 63, 62, 62),
                 textcolor: Colors.white,
-                textsize: 16,
-                callback: () {},
+                callback: btnONclick,
+                color: Colors.grey,
+                textsize: 24,
               ),
               CalculatorButton(
                 text: '<',
                 textcolor: Colors.white,
-                callback: (){},
-                color: const Color.fromARGB(255, 63, 62, 62),
+                callback: btnONclick,
+                color: Colors.grey,
                 textsize: 24,
               ),
               CalculatorButton(
                 text: '÷',
                 textcolor: Colors.white,
-                callback: (){},
-                color: Colors.orangeAccent,
+                callback: btnONclick,
+                color: Colors.orange,
                 textsize: 24,
               ),
             ],
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               CalculatorButton(
-                text: '7',
-                color: Colors.grey,
-                textcolor: Colors.white,
-                textsize: 20,
-                callback: () {},
+                text: '9',
+                textcolor: Colors.black,
+                callback: btnONclick,
+                color: Colors.white,
+                textsize: 24,
               ),
               CalculatorButton(
                 text: '8',
-                color: Colors.grey,
-                textcolor: Colors.white,
-                textsize: 20,
-                callback: () {},
+                textcolor: Colors.black,
+                callback: btnONclick,
+                color: Colors.white,
+                textsize: 24,
               ),
               CalculatorButton(
-                text: '9',
-                color: Colors.grey,
-                textcolor: Colors.white,
-                textsize: 20,
-                callback: () {},
+                text: '7',
+                textcolor: Colors.black,
+                callback: btnONclick,
+                color: Colors.white,
+                textsize: 24,
               ),
               CalculatorButton(
                 text: 'X',
-                color: Colors.orangeAccent,
                 textcolor: Colors.white,
-                textsize: 20,
-                callback: () {},
+                callback: btnONclick,
+                color: Colors.orange,
+                textsize: 24,
               ),
             ],
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               CalculatorButton(
-                text: '4',
-                color: Colors.grey,
-                textcolor: Colors.white,
-                textsize: 20,
-                callback: () {},
+                text: '6',
+                textcolor: Colors.black,
+                callback: btnONclick,
+                color: Colors.white,
+                textsize: 24,
               ),
               CalculatorButton(
                 text: '5',
-                color: Colors.grey,
-                textcolor: Colors.white,
-                textsize: 20,
-                callback: () {},
+                textcolor: Colors.black,
+                callback: btnONclick,
+                color: Colors.white,
+                textsize: 24,
               ),
               CalculatorButton(
-                text: '6',
-                color: Colors.grey,
-                textcolor: Colors.white,
-                textsize: 20,
-                callback: () {},
+                text: '4',
+                textcolor: Colors.black,
+                callback: btnONclick,
+                color: Colors.white,
+                textsize: 24,
               ),
               CalculatorButton(
                 text: '-',
-                color: Colors.orangeAccent,
                 textcolor: Colors.white,
+                callback: btnONclick,
+                color: Colors.orange,
                 textsize: 24,
-                callback: () {},
               ),
             ],
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               CalculatorButton(
-                text: '1',
-                color: Colors.grey,
-                textcolor: Colors.white,
-                textsize: 20,
-                callback: () {},
+                text: '3',
+                textcolor: Colors.black,
+                callback: btnONclick,
+                color: Colors.white,
+                textsize: 24,
               ),
               CalculatorButton(
                 text: '2',
-                color: Colors.grey,
-                textcolor: Colors.white,
-                textsize: 20,
-                callback: () {},
+                textcolor: Colors.black,
+                callback: btnONclick,
+                color: Colors.white,
+                textsize: 24,
               ),
               CalculatorButton(
-                text: '3',
-                color: Colors.grey,
-                textcolor: Colors.white,
-                textsize: 20,
-                callback: () {},
+                text: '1',
+                textcolor: Colors.black,
+                callback: btnONclick,
+                color: Colors.white,
+                textsize: 24,
               ),
               CalculatorButton(
                 text: '+',
-                 color: Colors.orangeAccent,
                 textcolor: Colors.white,
+                callback: btnONclick,
+                color: Colors.orange,
                 textsize: 24,
-                callback: () {},
               ),
             ],
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               CalculatorButton(
                 text: '+/-',
-                color: Colors.grey,
-                textcolor: Colors.white,
-                textsize: 15,
-                callback: () {},
+                textcolor: Colors.black,
+                callback: btnONclick,
+                color: Colors.white,
+                textsize: 16,
               ),
               CalculatorButton(
                 text: '0',
-                color: Colors.grey,
-                textcolor: Colors.white,
-                textsize: 15,
-                callback: () {},
+                textcolor: Colors.black,
+                callback: btnONclick,
+                color: Colors.white,
+                textsize: 24,
               ),
               CalculatorButton(
                 text: '00',
-                color: Colors.grey,
-                textcolor: Colors.white,
-                textsize: 15,
-                callback: () {},
+                textcolor: Colors.black,
+                callback: btnONclick,
+                color: Colors.white,
+                textsize: 20,
               ),
               CalculatorButton(
                 text: '=',
-                color: Colors.orangeAccent,
                 textcolor: Colors.white,
-                textsize: 15,
-                callback: () {},
+                callback: btnONclick,
+                color: Colors.orange,
+                textsize: 24,
               ),
             ],
-          ),
+          )
         ],
       ),
     );

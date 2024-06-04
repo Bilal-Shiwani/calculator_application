@@ -34,7 +34,7 @@ class _SplashScreenState extends State<SplashScreen> {
         Center(
           child: Image(
             image: AssetImage(
-              "assets/appicon.png",
+              "assets/cal_logo.png",
             ),
           ),
         ),
